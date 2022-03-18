@@ -129,9 +129,6 @@ services:
               source: ./phpmyadmin/config.user.inc.php
               target: '${PMA_CONF_FOLDER}/config.user.inc.php'
             - type: bind
-              source: ./phpmyadmin/config.secret.inc.php
-              target: '${PMA_CONF_FOLDER}/config.secret.inc.php'
-            - type: bind
               source: ./phpmyadmin/php/conf.d/security.ini
               target: '${PHP_INI_DIR}/conf.d/security.ini'
             - 'certbot-etc:${LETSENCRYPT_CONF_PREFIX}'
@@ -175,9 +172,9 @@ services:
             - '3306:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-            MYSQL_DATABASE: '${WORDPRESS_DB_NAME}'
-            MYSQL_USER: '${WORDPRESS_DB_USER}'
-            MYSQL_PASSWORD: '${WORDPRESS_DB_PASSWORD}'
+            MYSQL_DATABASE: '${JOOMLA_DB_NAME}'
+            MYSQL_USER: '${JOOMLA_DB_USER}'
+            MYSQL_PASSWORD: '${JOOMLA_DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 'No'
             MYSQL_ROOT_HOST: '${MYSQL_ROOT_HOST}'
             TZ: '${LOCAL_TIMEZONE}'
