@@ -96,12 +96,9 @@ DIRECTORY_PATH=```pwd``` at command line
 and
 
 ```
-cp ./proxy/conf.d/proxy.sample.conf ./proxy/conf.d/proxy.conf
-```
-change example.com to your domain name in ```./proxy/conf.d/proxy.conf``` file.
-```
 cp ./phpmyadmin/apache2/sites-available/default-ssl.sample.conf ./phpmyadmin/apache2/sites-available/default-ssl.conf
 ```
+
 change example.com to your domain name in ```./phpmyadmin/apache2/sites-available/default-ssl.conf``` file.
 
 ## Installation
@@ -198,7 +195,7 @@ pm.max_requests = 1000
 Or you should make changes custom host configurations then must restart service
 
 ```
-docker-compose restart joomla
+docker container restart <joomla_container_id>
 ```
 
 add and/or remove joomla site folders and files with any ftp client program in ```./joomla``` folder.
@@ -209,7 +206,9 @@ add and/or remove joomla site folders and files with any ftp client program in `
 set and enable cache option at global configuration [Redis Cache](https://example.com/administrator/).
 
 Cache Handler = redis
+
 Redis Server Host = redis
+
 Redis Server Port = 6379
 
 ### phpMyAdmin
