@@ -31,7 +31,8 @@ services:
             JOOMLA_DB_NAME: '${JOOMLA_DB_NAME}'
             TZ: '${LOCAL_TIMEZONE}'
         labels:            
-            - 'docker-volume-backup.stop-during-backup=true'        
+            - 'docker-volume-backup.stop-during-backup=true'
+        command: bash -c "grep -q -e 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini"
 
     webserver:
         depends_on:
