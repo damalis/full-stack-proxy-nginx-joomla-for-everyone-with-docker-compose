@@ -127,9 +127,9 @@ manage docker with [Portainer](https://www.portainer.io/solutions/docker) is the
 
 You can also visit `https://example.com:9001` to access portainer after starting the containers.
 
-#### You could manage containers with portainer without command line.
-
 ## Usage
+
+#### You could manage docker containers without command line with portainer.
 
 ### Starting containers
 
