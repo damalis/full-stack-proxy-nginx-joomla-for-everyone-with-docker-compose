@@ -1,13 +1,18 @@
+upstream docker_webserver {
+	server	webserver:8080;
+}
+
 map $scheme $proxy_x_forwarded_ssl {
 	default off;
 	https on;
 }
 
+server_tokens off;
 proxy_hide_header X-Powered-By;
 
 server {
 	listen ${NGINX_PORT} default_server;
-	listen [::]:${NGINX_PORT} ipv6only=on;
+	listen [::]:${NGINX_PORT} ipv6only=on default_server;
 	#
 	server_name ${NGINX_HOST} www.${NGINX_HOST};
 	#
@@ -47,7 +52,7 @@ server {
 	add_header X-Cache-Status $upstream_cache_status;
   
 	location / {		
-		proxy_pass	http://webserver:8080;		
+		proxy_pass	http://docker_webserver;		
 		proxy_set_header	X-Real-IP	$remote_addr;
 		proxy_set_header	X-Forwarded-For	$proxy_add_x_forwarded_for;
 		proxy_set_header	X-Forwarded-Proto	$scheme;		
