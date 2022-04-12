@@ -4,8 +4,7 @@ services:
 
     joomla:
         depends_on:
-            - database
-            - redis
+            - webserver
         image: 'joomla:${PHP_IMAGE_NAME}'
         container_name: 'jm-${PHP_IMAGE_NAME}'
         networks:
@@ -36,6 +35,8 @@ services:
         entrypoint: bash -c "grep -q -e 'date.timezone = ${LOCAL_TIMEZONE}' ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini || echo 'date.timezone = ${LOCAL_TIMEZONE}' >> ${PHP_INI_DIR_PREFIX}/php/conf.d/security.ini && /entrypoint.sh 'php-fpm'"
 
     webserver:
+        depends_on:
+            - certbot
         image: 'httpd:latest'
         container_name: webserver
         networks:
@@ -72,8 +73,6 @@ services:
             && trap exit TERM; while :; do certbot renew --dry-run; sleep 12h & wait $${!}; done;"
 
     proxy:
-        depends_on:
-            - webserver
         image: nginx:stable
         container_name: proxy
         networks:
@@ -110,7 +109,7 @@ services:
     
     phpmyadmin:
         depends_on:
-            - certbot
+            - redis
         image: phpmyadmin/phpmyadmin
         container_name: phpmyadmin
         networks:
@@ -164,6 +163,8 @@ services:
             && a2enmod ssl && a2ensite default-ssl && a2dissite 000-default && service apache2 restart && tail -f /dev/null"
     
     database:
+        depends_on:
+            - joomla
         image: '${DATABASE_IMAGE_NAME}:${DATABASE_VERSION}'
         container_name: '${DATABASE_CONT_NAME}'
         networks:
@@ -190,6 +191,8 @@ services:
         command: '--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password'    
     
     redis:
+        depends_on:
+            - database
         image: 'redis:latest'
         container_name: redis
         networks:
