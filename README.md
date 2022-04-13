@@ -23,7 +23,7 @@ For certbot (letsencrypt) certificate:
 
 - [Set DNS configuration of your domain name](https://support.google.com/a/answer/48090?hl=en)
 
-## IPv4/IPv6 Firewall
+#### IPv4/IPv6 Firewall
 Create rules to open ports to the internet, or to a specific IPv4 address or range.
 
 - http: 80
