@@ -2,12 +2,12 @@
 
 clear
 echo ""
-echo "================================================================="
-echo "|                                                               |"
-echo "|      full-stack-joomla-for-everyone-with-docker-compose       |"
-echo "|                      by Erdal ALTIN                           |"
-echo "|                                                               |"
-echo "================================================================="
+echo "======================================================================"
+echo "|                                                                    |"
+echo "|   full-stack-proxy-nginx-joomla-for-everyone-with-docker-compose   |"
+echo "|                         by Erdal ALTIN                             |"
+echo "|                                                                    |"
+echo "======================================================================"
 sleep 2
 
 # Uninstall old versions
