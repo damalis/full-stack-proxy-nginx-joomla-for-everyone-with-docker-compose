@@ -214,9 +214,9 @@ add and/or remove joomla site folders and files with any ftp client program in `
 
 Database server name = database
 
-Database name = ${JOOMLA_DB_NAME}	constant at ./.env file.
+Database name = ${JOOMLA_DB_NAME} constant at ./.env file.
 
-#### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
+##### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
 
 You must restart varnish container after enable Use URL Rewriting at Joomla admin page.
 
