@@ -59,7 +59,7 @@ server {
 		# Mitigate httpoxy attack
 		proxy_set_header Proxy "";
 
-		rewrite ^([^.]*[^/])$ $1/ permanent;        
+		rewrite ^(/administrator)$ $1/ permanent;        
 	}
 	#
 	# deny access to .htaccess vb. files, if Apache's document root
