@@ -34,9 +34,6 @@ server {
 	#ssl_trusted_certificate /etc/letsencrypt/live/${NGINX_HOST}/chain.pem;
 	#ssl_dhparam /etc/letsencrypt/ssl-dhparam.pem;
 	include /etc/letsencrypt/options-ssl-nginx.conf;
-
-  	# add global x-content-type-options header
-	add_header X-Content-Type-Options nosniff;
   
 	location / {		
 		proxy_pass	http://docker_webserver;		
