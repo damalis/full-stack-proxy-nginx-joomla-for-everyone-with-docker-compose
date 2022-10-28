@@ -41,7 +41,7 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 	- [Website](#website)
 	- [Proxy](#proxy)
 	- [Webserver](#webserver)
-	- [Redis Plugin](#redis-plugin)
+	- [Redis](#redis)
 	- [phpMyAdmin](#phpmyadmin)
 	- [backup](#backup)					  
 
