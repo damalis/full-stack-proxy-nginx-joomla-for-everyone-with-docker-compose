@@ -238,6 +238,10 @@ Proxying is typically used to distribute the load among several servers, seamles
 
 [https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
 
+#### Webserver
+
+add or remove code in the ```./webserver/extra/httpd-vhosts.conf``` file for custom apache2/httpd configurations
+
 #### Joomla
 
 Database server name = database
