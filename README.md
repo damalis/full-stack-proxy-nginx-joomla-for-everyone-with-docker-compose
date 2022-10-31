@@ -41,9 +41,10 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 	- [Website](#website)
 	- [Proxy](#proxy)
 	- [Webserver](#webserver)
+	- [Database](#database)
 	- [Redis](#redis)
 	- [phpMyAdmin](#phpmyadmin)
-	- [backup](#backup)					  
+	- [backup](#backup)
 
 ## Automatic
 
@@ -86,8 +87,6 @@ Open a terminal and `cd` to the folder in which `docker-compose.yml` is saved an
 ```
 cd full-stack-proxy-nginx-joomla-for-everyone-with-docker-compose
 ```
-
-### Manual
 
 Copy the example environment into `.env`
 
@@ -168,7 +167,7 @@ docker-compose stop
 
 ### Removing containers
 
-To stop and remove all the containers use the`down` command:
+To stop and remove all the containers use the `down` command:
 
 ```
 docker-compose down
@@ -232,19 +231,19 @@ add and/or remove joomla site folders and files with any ftp client program in `
 
 Proxying is typically used to distribute the load among several servers, seamlessly show content from different websites, or pass requests for processing to application servers over protocols other than HTTP.
 
+add or remove code in the ```./proxy/templates/proxy.conf.template``` file for custom proxy configurations
+
 [https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/](https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/)
 
 #### Webserver
 
 add or remove code in the ```./webserver/extra/httpd-vhosts.conf``` file for custom apache2/httpd configurations
 
-#### Joomla
+#### Database
 
 Database server name = database
 
-Database name = ${JOOMLA_DB_NAME} constant at ./.env file.
-
-##### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
+#### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
 
 You must restart varnish container after enable Use URL Rewriting at Joomla admin page.
 
