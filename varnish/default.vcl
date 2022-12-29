@@ -7,15 +7,6 @@ backend default {
     .port = "90";
 }
 
-# Add hostnames, IP addresses and subnets that are allowed to purge content
-acl purge {
-    "webserver";
-    "joomla";
-    "localhost";
-    "127.0.0.1";
-    "::1";
-}
-
 sub vcl_recv {   
     # Remove empty query string parameters
     # e.g.: www.example.com/index.html?
@@ -34,12 +25,8 @@ sub vcl_recv {
     unset req.http.proxy;
 	
     # Purge logic to remove objects from the cache. 
-    # Tailored to the Proxy Cache Purge WordPress plugin
-    # See https://wordpress.org/plugins/varnish-http-purge/
+    # Tailored to the Proxy Cache Purge
     if(req.method == "PURGE") {
-        if(!client.ip ~ purge) {
-            return(synth(405,"PURGE not allowed for this IP address"));
-        }
         if (req.http.X-Purge-Method == "regex") {
             ban("obj.http.x-url ~ " + req.url + " && obj.http.x-host == " + req.http.host);
             return(synth(200, "Purged"));
@@ -86,10 +73,12 @@ sub vcl_recv {
 
     # No caching of special URLs, logged in users and some plugins
     if (
-        req.http.Cookie ~ "wordpress_(?!test_)[a-zA-Z0-9_]+|wp-postpass|comment_author_[a-zA-Z0-9_]+|woocommerce_cart_hash|woocommerce_items_in_cart|wp_woocommerce_session_[a-zA-Z0-9]+|wordpress_logged_in_|comment_author|PHPSESSID" ||
         req.http.Authorization ||
+        req.http.Authenticate ||
+        req.http.X-Logged-In == "True" ||
+        req.http.Cookie ~ "userID" ||
+        req.http.Cookie ~ "joomla_[a-zA-Z0-9_]+" ||
         req.url ~ "add_to_cart" ||
-        req.url ~ "edd_action" ||
         req.url ~ "nocache" ||
         req.url ~ "^/addons" ||
         req.url ~ "^/bb-admin" ||
@@ -109,16 +98,12 @@ sub vcl_recv {
         req.url ~ "^/signin" ||
         req.url ~ "^/signup" ||
         req.url ~ "^/stats" ||
-        req.url ~ "^/wc-api" ||
-        req.url ~ "^/wp-admin" ||
-        req.url ~ "^/wp-comments-post.php" ||
-        req.url ~ "^/wp-cron.php" ||
-        req.url ~ "^/wp-login.php" ||
-        req.url ~ "^/wp-activate.php" ||
-        req.url ~ "^/wp-mail.php" ||
-        req.url ~ "^/wp-login.php" ||
-        req.url ~ "^\?add-to-cart=" ||
-        req.url ~ "^\?wc-api=" ||
+        req.url ~ "^/administrator" ||
+        req.url ~ "^/component/banners" ||
+        req.url ~ "^/component/socialconnect" ||
+        req.url ~ "^/component/users" ||
+        req.url ~ "^/connect" ||
+        req.url ~ "^/contact" ||
         req.url ~ "^/preview=" ||
         req.url ~ "^/\.well-known/acme-challenge/"
     ) {
@@ -202,16 +187,21 @@ sub vcl_backend_response {
         set beresp.http.X-Cacheable = "YES:Forced";
         set beresp.ttl = 1d;
     }
-
-    # Remove the Set-Cookie header when a specific Wordfence cookie is set
-    if (beresp.http.Set-Cookie ~ "wfvt_|wordfence_verifiedHuman") {
-        unset beresp.http.Set-Cookie;
-    }
 	
     if (beresp.http.Set-Cookie) {
         set beresp.http.X-Cacheable = "NO:Got Cookies";
     } elseif(beresp.http.Cache-Control ~ "private") {
         set beresp.http.X-Cacheable = "NO:Cache-Control=private";
+    }
+
+    # Don't cache 50x responses
+    if (
+        beresp.status == 500 ||
+        beresp.status == 502 ||
+        beresp.status == 503 ||
+        beresp.status == 504
+    ) {
+        return (abandon);
     }	
 }
 
