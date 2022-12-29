@@ -219,6 +219,10 @@ You should see the "Joomla installation" page in your browser. If not, please ch
 https://example.com
 ```
 
+#### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
+
+You must enable Use URL Rewriting at Joomla admin page then ```docker container restart varnish```.
+
 add or remove code in the ./php-fpm/php/conf.d/security.ini file for custom php.ini configurations
 
 [https://www.php.net/manual/en/configuration.file.php](https://www.php.net/manual/en/configuration.file.php)
@@ -250,10 +254,6 @@ add or remove code in the ```./webserver/extra/httpd-vhosts.conf``` file for cus
 
 Database server name = database
 
-#### How to remove index.php from URLs or How to Solve Joomla Installation stuck on white blank page.
-
-You must enable Use URL Rewriting at Joomla admin page.
-
 #### Redis
 
 set and enable cache option at global configuration [Redis Cache](https://example.com/administrator/).
@@ -263,6 +263,10 @@ Cache Handler = redis
 Redis Server Host = redis
 
 Redis Server Port = 6379
+
+#### Mail
+
+sendmail settings in configuration.php file ```$sendmail = '/usr/bin/mhsendmail'; $smtphost = 'mail'; $smtpport = 1025;```
 
 ### phpMyAdmin
 
