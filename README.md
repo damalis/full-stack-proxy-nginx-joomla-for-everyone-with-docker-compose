@@ -268,7 +268,9 @@ Redis Server Port = 6379
 
 #### Mail
 
-sendmail settings in ```./joomla/configuration.php``` file; ```$sendmail = '/usr/bin/mhsendmail'; $smtphost = 'mail'; $smtpport = 1025;```
+SMTP settings; ```sendmail = '/usr/bin/mhsendmail'; Host: mail; Port: 1025;```
+
+The authorize screen, ```username: ${PMA_HTPASSWD_USERNAME}``` and ```password: ${PMA_HTPASSWD_PASSWORD}``` in the `.env` file.
 
 ### phpMyAdmin
 
