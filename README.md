@@ -372,7 +372,7 @@ set and enable cache option at global configuration [Redis Cache](https://DOMAIN
 
 #### Mail
 
-Mailer: ```Mailer = SMTP; SMTP Host: mail; SMTP Port: 1025;```
+Mail: ```Mailer = sendmail; Sendmail Path = /usr/bin/mhsendmail``` or ```Mailer = SMTP; SMTP Host: mail; SMTP Port: 1025;```
 
 The authorize screen, ```username: ${PMA_HTPASSWD_USERNAME}``` and ```password: ${PMA_HTPASSWD_PASSWORD}``` in the `.env` file.
 
