@@ -120,7 +120,7 @@ services:
             test: ["CMD-SHELL", "/bin/pidof nginx > /dev/null || exit 1"]
             interval: 10s
             timeout: 5s
-            retries: 10
+            retries: 20
         environment:
             NGINX_HOST: ${DOMAIN_NAME}
             NGINX_PORT: 80
